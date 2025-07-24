@@ -12,24 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package controllers
+import * as Setting from "../Setting";
 
-import (
-	"github.com/casibase/casibase/object"
-)
+export function getActivities(serverUrl, selectedUser, days, field) {
+  if (serverUrl === "") {
+    serverUrl = Setting.ServerUrl;
+  }
 
-// GetK8sStatus
-// @Title GetK8sStatus
-// @Tag Deployment API
-// @Description get kubernetes cluster status
-// @Success 200 {object} object.K8sStatus The Response object
-// @router /get-k8s-status [get]
-func (c *ApiController) GetK8sStatus() {
-	status, err := object.GetK8sStatus()
-	if err != nil {
-		c.ResponseError(err.Error())
-		return
-	}
-
-	c.ResponseOk(status)
+  return fetch(`${serverUrl}/api/get-activities?days=${days}&selectedUser=${selectedUser}&field=${field}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Accept-Language": Setting.getAcceptLanguage(),
+    },
+  }).then(res => res.json());
 }

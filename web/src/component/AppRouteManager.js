@@ -118,6 +118,18 @@ routeManager.registerApp("usages", {
   ],
 });
 
+routeManager.registerApp("activity", {
+  title: "Activities",
+  iconPath: "usage.svg",
+  gradient: "linear-gradient(135deg, #52abde 0%, #fbf5f1 100%)",
+  routes: [
+    {
+      path: "/activity",
+      component: () => import("../ActivityPage"),
+    },
+  ],
+});
+
 routeManager.registerApp("chats", {
   title: "Chats",
   gradient: "linear-gradient(135deg, #31b4ff 0%, #fbf5f1 100%)",
@@ -438,7 +450,6 @@ routeManager.registerApp("super-resolution", {
 routeManager.registerApp("sessions", {
   title: "Sessions",
   gradient: "linear-gradient(135deg, #f16a7d 0%, #c7c7c7 100%)",
-  i18nNamespace: "med",
   routes: [
     {
       path: "/sessions",
@@ -450,7 +461,6 @@ routeManager.registerApp("sessions", {
 routeManager.registerApp("records", {
   title: "Records",
   gradient: "linear-gradient(135deg, #fae190 0%, #bca762 100%)",
-  i18nNamespace: "med",
   routes: [
     {
       path: "/records",

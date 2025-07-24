@@ -71,6 +71,7 @@ import ChatPage from "./ChatPage";
 import CustomGithubCorner from "./CustomGithubCorner";
 import ShortcutsPage from "./basic/ShortcutsPage";
 import UsagePage from "./UsagePage";
+import ActivityPage from "./ActivityPage";
 import * as StoreBackend from "./backend/StoreBackend";
 import NodeWorkbench from "./NodeWorkbench";
 import AccessPage from "./component/access/AccessPage";
@@ -83,6 +84,8 @@ import * as FetchFilter from "./backend/FetchFilter";
 import OsDesktop from "./OsDesktop";
 import TemplateListPage from "./TemplateListPage";
 import TemplateEditPage from "./TemplateEditPage";
+import ApplicationListPage from "./ApplicationListPage";
+import ApplicationEditPage from "./ApplicationEditPage";
 
 const {Header, Footer, Content} = Layout;
 
@@ -191,6 +194,8 @@ class App extends Component {
       this.setState({selectedMenuKey: "/messages"});
     } else if (uri.includes("/usages")) {
       this.setState({selectedMenuKey: "/usages"});
+    } else if (uri.includes("/activities")) {
+      this.setState({selectedMenuKey: "/activities"});
     } else if (uri.includes("/nodes")) {
       this.setState({selectedMenuKey: "/nodes"});
     } else if (uri.includes("/machines")) {
@@ -203,6 +208,8 @@ class App extends Component {
       this.setState({selectedMenuKey: "/pods"});
     } else if (uri.includes("/templates")) {
       this.setState({selectedMenuKey: "/templates"});
+    } else if (uri.includes("/applications")) {
+      this.setState({selectedMenuKey: "/applications"});
     } else if (uri.includes("/sessions")) {
       this.setState({selectedMenuKey: "/sessions"});
     } else if (uri.includes("/records")) {
@@ -507,6 +514,7 @@ class App extends Component {
       res.push(Setting.getItem(<Link to="/chats">{i18next.t("general:Chats")}</Link>, "/chats"));
       res.push(Setting.getItem(<Link to="/messages">{i18next.t("general:Messages")}</Link>, "/messages"));
       res.push(Setting.getItem(<Link to="/usages">{i18next.t("general:Usages")}</Link>, "/usages"));
+      res.push(Setting.getItem(<Link to="/activities">{i18next.t("general:Activities")}</Link>, "/activities"));
       // res.push(Setting.getItem(<Link to="/tasks">{i18next.t("general:Tasks")}</Link>, "/tasks"));
       // res.push(Setting.getItem(<Link to="/articles">{i18next.t("general:Articles")}</Link>, "/articles"));
     } else if (this.state.account.type === "chat-admin") {
@@ -516,6 +524,7 @@ class App extends Component {
       res.push(Setting.getItem(<Link to="/chats">{i18next.t("general:Chats")}</Link>, "/chats"));
       res.push(Setting.getItem(<Link to="/messages">{i18next.t("general:Messages")}</Link>, "/messages"));
       res.push(Setting.getItem(<Link to="/usages">{i18next.t("general:Usages")}</Link>, "/usages"));
+      res.push(Setting.getItem(<Link to="/activities">{i18next.t("general:Activities")}</Link>, "/activities"));
 
       if (window.location.pathname === "/") {
         Setting.goToLinkSoft(this, "/chat");
@@ -561,6 +570,7 @@ class App extends Component {
       res.push(Setting.getItem(<Link style={{color: textColor}} to="/chat">{i18next.t("general:Home")}</Link>, "/home", <HomeTwoTone twoToneColor={twoToneColor} />, [
         Setting.getItem(<Link to="/chat">{i18next.t("general:Chat")}</Link>, "/Chat"),
         Setting.getItem(<Link to="/usages">{i18next.t("general:Usages")}</Link>, "/usages"),
+        Setting.getItem(<Link to="/activities">{i18next.t("general:Activities")}</Link>, "/activities"),
         Setting.getItem(<Link to="/desktop">{i18next.t("general:OS Desktop")}</Link>, "/desktop"),
       ]));
 
@@ -577,6 +587,7 @@ class App extends Component {
 
       res.push(Setting.getItem(<Link style={{color: textColor}} to="/nodes">{i18next.t("general:Cloud Resources")}</Link>, "/cloud", <CloudTwoTone twoToneColor={twoToneColor} />, [
         Setting.getItem(<Link to="/templates">{i18next.t("general:Templates")}</Link>, "/templates"),
+        Setting.getItem(<Link to="/applications">{i18next.t("general:Applications")}</Link>, "/applications"),
         Setting.getItem(<Link to="/nodes">{i18next.t("general:Nodes")}</Link>, "/nodes"),
         Setting.getItem(<Link to="/machines">{i18next.t("general:Machines")}</Link>, "/machines"),
         Setting.getItem(<Link to="/images">{i18next.t("general:Images")}</Link>, "/images"),
@@ -694,9 +705,12 @@ class App extends Component {
         <Route exact path="/messages" render={(props) => this.renderSigninIfNotSignedIn(<MessageListPage account={this.state.account} {...props} />)} />
         <Route exact path="/messages/:messageName" render={(props) => this.renderSigninIfNotSignedIn(<MessageEditPage account={this.state.account} {...props} />)} />
         <Route exact path="/usages" render={(props) => this.renderSigninIfNotSignedIn(<UsagePage account={this.state.account} {...props} />)} />
+        <Route exact path="/activities" render={(props) => this.renderSigninIfNotSignedIn(<ActivityPage account={this.state.account} {...props} />)} />
         <Route exact path="/desktop" render={(props) => <OsDesktop account={this.state.account} {...props} />} />
         <Route exact path="/templates" render={(props) => this.renderSigninIfNotSignedIn(<TemplateListPage account={this.state.account} {...props} />)} />
         <Route exact path="/templates/:templateName" render={(props) => this.renderSigninIfNotSignedIn(<TemplateEditPage account={this.state.account} {...props} />)} />
+        <Route exact path="/applications" render={(props) => this.renderSigninIfNotSignedIn(<ApplicationListPage account={this.state.account} {...props} />)} />
+        <Route exact path="/applications/:applicationName" render={(props) => this.renderSigninIfNotSignedIn(<ApplicationEditPage account={this.state.account} {...props} />)} />
         <Route exact path="/nodes" render={(props) => this.renderSigninIfNotSignedIn(<NodeListPage account={this.state.account} {...props} />)} />
         <Route exact path="/nodes/:nodeName" render={(props) => this.renderSigninIfNotSignedIn(<NodeEditPage account={this.state.account} {...props} />)} />
         <Route exact path="/sessions" render={(props) => this.renderSigninIfNotSignedIn(<SessionListPage account={this.state.account} {...props} />)} />
