@@ -36,10 +36,10 @@ type Application struct {
 	Status      string `xorm:"varchar(50)" json:"status"`     // Running, Pending, Failed, Not Deployed
 	Namespace   string `xorm:"varchar(100)" json:"namespace"` // Kubernetes namespace (auto-generated)
 
-	BasicConfigOptions []applicationBasicOption `xorm:"mediumtext" json:"basicConfigOptions"`
+	BasicConfigOptions []applicationConfigOption `xorm:"mediumtext" json:"basicConfigOptions"`
 }
 
-type applicationBasicOption struct {
+type applicationConfigOption struct {
 	Parameter string `json:"parameter"`
 	Value     string `json:"value"`
 }
