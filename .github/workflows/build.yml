@@ -39,7 +39,7 @@ jobs:
       - run: yarn install && CI=false yarn run build
         working-directory: ./web
       - name: Upload build artifacts
-        if: github.repository == 'casibase/casibase' && github.event_name == 'push'
+        if: github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build-${{ github.run_id }}
@@ -88,7 +88,7 @@ jobs:
     permissions:
       contents: write
       issues: write
-    if: github.repository == 'casibase/casibase' && github.event_name == 'push'
+    if: github.event_name == 'push'
     needs: [ frontend, backend, linter ]
     outputs:
       new-release-published: ${{ steps.semantic.outputs.new-release-published }}
@@ -126,7 +126,7 @@ jobs:
     permissions:
       contents: write
       issues: write
-    if: github.repository == 'casibase/casibase' && github.event_name == 'push' && needs.tag-release.outputs.new-release-published == 'true'
+    if: github.event_name == 'push' && needs.tag-release.outputs.new-release-published == 'true'
     needs: [ tag-release ]
     steps:
       - name: Checkout
