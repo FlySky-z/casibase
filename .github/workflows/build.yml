@@ -91,34 +91,17 @@ jobs:
     if: github.event_name == 'push'
     needs: [ frontend, backend, linter ]
     outputs:
-      new-release-published: ${{ steps.semantic.outputs.new-release-published }}
-      current-version: ${{ steps.get-current-tag.outputs.tag }}
+      new-release-published: ${{ steps.semantic.outputs.new_release_published }}
+      current-version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
-      - name: Fetch Previous version
-        id: get-previous-tag
-        uses: actions-ecosystem/action-get-latest-tag@v1.6.0
 
       - name: Create Tag with Semantic Release
         id: semantic
-        run: |
-          yarn global add semantic-release@17.4.4 && semantic-release
+        uses: cycjimmy/semantic-release-action@v4
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Fetch Current version
-        id: get-current-tag
-        if: steps.semantic.outputs.new-release-published == 'true'
-        uses: actions-ecosystem/action-get-latest-tag@v1.6.0
 
   github-release:
     name: GitHub Release
